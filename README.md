@@ -21,3 +21,11 @@ competition_codes = {
 `['competitions', 'matches', 'players', 'scorers', 'teams']`
 - Information about [API usage](https://www.football-data.org/documentation/quickstart)
 - Information about [filtering data](www.football-data.org/documentation/quickstart#filtering)
+
+## Usage
+- Open `api_endpoints.py` and alter the list of API endpoints you'd like to get data from (check docs for details about structuring the API endpoint call).
+- cd into /src and run `python run.py`
+- Results will be generated in the root directory.
+
+## Limitations
+- Limited API resources are available, unless you have a premium account.
