@@ -33,4 +33,4 @@ competition_codes = {
 - Limited API resources are available, unless you have a premium account.
 
 ## Known issues
-- Dynamic naming of CSV files of results needs a fix. Not able to include all querystring parameters into the filename.
+- Dynamic naming of CSV files of results **might** need a fix. Not tested thoroughly.
