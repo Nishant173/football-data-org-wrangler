@@ -39,7 +39,7 @@ def run_and_timeit(func):
     warnings.filterwarnings(action='ignore')
     func()
     end = time.time()
-    time_taken_in_secs = round((end - start), 2)
+    time_taken_in_secs = int(round((end - start), 2))
     if time_taken_in_secs < 60:
         secs = time_taken_in_secs
         time_taken = f"{secs}s"
