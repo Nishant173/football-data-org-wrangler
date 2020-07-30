@@ -39,6 +39,7 @@ def execute_pipeline():
     utils.create_global_results_folder()
     endpoints = api_endpoints.API_ENDPOINTS
     num_files_wrangled = 0
+    valid_resources = ['competitions', 'teams', 'players', 'scorers']
     for endpoint in endpoints:
         print(f"\nProcessing endpoint: '{endpoint}'")
         endpoint_components = endpoint.split('/')
@@ -49,22 +50,23 @@ def execute_pipeline():
         else:
             resource = endpoint_components[0]
         print(f"Resource: '{resource}'")
-        if resource == 'competitions':
-            dataframe_results = get_competition_matches_data(api_endpoint=endpoint)
-        elif resource == 'teams':
-            dataframe_results = get_team_data(api_endpoint=endpoint)
-        elif resource == 'players':
-            dataframe_results = get_player_matches_data(api_endpoint=endpoint)
-        elif resource == 'scorers':
-            dataframe_results = get_competition_scorers_data(api_endpoint=endpoint)
+        if resource in valid_resources:
+            if resource == 'competitions':
+                dataframe_results = get_competition_matches_data(api_endpoint=endpoint)
+            elif resource == 'teams':
+                dataframe_results = get_team_data(api_endpoint=endpoint)
+            elif resource == 'players':
+                dataframe_results = get_player_matches_data(api_endpoint=endpoint)
+            elif resource == 'scorers':
+                dataframe_results = get_competition_scorers_data(api_endpoint=endpoint)
+            try:
+                filename_results = utils.get_filename_from_endpoint(api_endpoint=endpoint)
+                dataframe_results.to_csv(f"../{settings.GLOBAL_RESULTS_FOLDERNAME}/{filename_results}.csv", index=False)
+                num_files_wrangled += 1
+                print(f"Transformed and saved '{endpoint}' data to CSV")
+            except Exception as e:
+                print(f"Failed to transform '{endpoint}' data. ErrorMsg: {e}")
         else:
-            return {'error': 'Resource obtained is incorrect'}
-        try:
-            filename_results = utils.get_filename_from_endpoint(api_endpoint=endpoint)
-            dataframe_results.to_csv(f"../{settings.GLOBAL_RESULTS_FOLDERNAME}/{filename_results}.csv", index=False)
-            num_files_wrangled += 1
-            print(f"Transformed and saved '{endpoint}' data to CSV")
-        except Exception as e:
-            print(f"Failed to transform '{endpoint}' data. ErrorMsg: {e}")
+            print(f"Error ---> '{endpoint}' has an invalid resource: '{resource}'")
     print(f"\nSuccessfully wrangled data into {num_files_wrangled} CSV files")
     return None
