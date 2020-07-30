@@ -28,8 +28,8 @@ def get_player_matches_data(api_endpoint):
 
 def get_team_data(api_endpoint):
     dict_response = extract.get_raw_data(api_endpoint=api_endpoint)
-    data_player_matches = transform.transform_team_data(dict_response=dict_response)
-    return data_player_matches
+    data_by_team = transform.transform_team_data(dict_response=dict_response)
+    return data_by_team
 
 
 def execute_pipeline():
