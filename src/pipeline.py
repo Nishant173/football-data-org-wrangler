@@ -40,18 +40,13 @@ def execute_pipeline():
     utils.create_global_results_folder()
     endpoints = api_endpoints.API_ENDPOINTS
     num_files_wrangled = 0
-    valid_resources = ['competitions', 'teams', 'players', 'scorers']
     for endpoint in endpoints:
-        print(f"\nProcessing endpoint: '{endpoint}'")
-        endpoint_components = endpoint.split('/')
-        endpoint_components = list(filter(None, endpoint_components))
-        endpoint_components.remove('v2')
-        if 'scorers' in endpoint:
-            resource = 'scorers'
-        else:
-            resource = endpoint_components[0]
-        print(f"Resource: '{resource}'")
-        if resource in valid_resources:
+        resource = utils.identify_primary_resource(api_endpoint=endpoint)
+        print(
+            f"\nProcessing endpoint: '{endpoint}'",
+            f"\nResource: '{resource}'"
+        )
+        if resource in settings.VALID_API_RESOURCES:
             try:
                 if resource == 'competitions':
                     dataframe_results = get_competition_matches_data(api_endpoint=endpoint)
