@@ -1,0 +1,1 @@
+GLOBAL_RESULTS_FOLDERNAME = 'results'
