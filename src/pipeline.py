@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import traceback
 import api_endpoints
 import extract
 import settings
@@ -51,21 +52,23 @@ def execute_pipeline():
             resource = endpoint_components[0]
         print(f"Resource: '{resource}'")
         if resource in valid_resources:
-            if resource == 'competitions':
-                dataframe_results = get_competition_matches_data(api_endpoint=endpoint)
-            elif resource == 'teams':
-                dataframe_results = get_team_data(api_endpoint=endpoint)
-            elif resource == 'players':
-                dataframe_results = get_player_matches_data(api_endpoint=endpoint)
-            elif resource == 'scorers':
-                dataframe_results = get_competition_scorers_data(api_endpoint=endpoint)
             try:
+                if resource == 'competitions':
+                    dataframe_results = get_competition_matches_data(api_endpoint=endpoint)
+                elif resource == 'teams':
+                    dataframe_results = get_team_data(api_endpoint=endpoint)
+                elif resource == 'players':
+                    dataframe_results = get_player_matches_data(api_endpoint=endpoint)
+                elif resource == 'scorers':
+                    dataframe_results = get_competition_scorers_data(api_endpoint=endpoint)
                 filename_results = utils.get_filename_from_endpoint(api_endpoint=endpoint)
                 dataframe_results.to_csv(f"../{settings.GLOBAL_RESULTS_FOLDERNAME}/{filename_results}.csv", index=False)
                 num_files_wrangled += 1
                 print(f"Transformed and saved '{endpoint}' data to CSV")
             except Exception as e:
                 print(f"Failed to transform '{endpoint}' data. ErrorMsg: {e}")
+                if settings.PRINT_ERROR_TRACEBACK:
+                    print(f"ErrorTraceback: {traceback.print_exc()}\n\n\n\n")
         else:
             print(f"Error ---> '{endpoint}' has an invalid resource: '{resource}'")
     print(f"\nSuccessfully wrangled data into {num_files_wrangled} CSV files")
