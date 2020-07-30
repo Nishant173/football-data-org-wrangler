@@ -1,1 +1,1 @@
-API_TOKEN = '649877241f6d465d876c780859c0a4f9'
+API_TOKEN = 'enter-your-api-token-here'
