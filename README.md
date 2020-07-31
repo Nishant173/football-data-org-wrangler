@@ -20,13 +20,13 @@ competition_codes = {
 - API [Resources available](https://www.football-data.org/docs/v1/index.html#_resources)
 `['competitions', 'matches', 'players', 'scorers', 'teams']`
 - Information about [API usage](https://www.football-data.org/documentation/quickstart)
-- Information about [filtering data](www.football-data.org/documentation/quickstart#filtering)
+- Information about [filtering data](https://www.football-data.org/documentation/quickstart#filtering)
 
 ## Usage
-- Create an account on [football-data.org](https://www.football-data.org/) and get [your unique API token](https://www.football-data.org/client/home).
+- Create an account on [football-data.org](https://www.football-data.org/) and get [your unique API token](https://www.football-data.org/client/home) after signing into your account.
 - Open `credentials.py` and add your unique API token in between the quotes. `API_TOKEN = 'enter-your-api-token-here'`
 - Open `api_endpoints.py` and alter the list of API endpoints you'd like to get data from (check docs for details about structuring the API endpoint call).
-- cd into /src and run `python run.py`
+- cd into `src` directory and run `python run.py`
 - Results will be generated in the root directory.
 
 ## Limitations
